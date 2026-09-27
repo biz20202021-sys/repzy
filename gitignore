@@ -1,0 +1,19 @@
+# Cloudflare / Wrangler
+.wrangler/
+.dev.vars
+
+# Dépendances (si un jour tu ajoutes du tooling npm)
+node_modules/
+
+# Fichiers d'environnement locaux — les vraies clés vivent dans le dashboard
+# Cloudflare Pages (Settings > Environment Variables), jamais ici
+.env
+.env.local
+
+# Système
+.DS_Store
+Thumbs.db
+
+# Éditeurs
+.vscode/
+.idea/

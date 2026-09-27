@@ -1,0 +1,12 @@
+# Copy this file to ".dev.vars" (without the .example suffix) in the same folder,
+# then paste your real Trello values there. .dev.vars is already in .gitignore
+# and will never be committed to GitHub.
+#
+# This is only for local testing with:
+#   npx wrangler pages dev website
+# In production on Cloudflare Pages, configure the same variables in the dashboard
+# at Settings > Environment variables, not in this file.
+
+TRELLO_API_KEY=7f432cdd42f6c66ca1afdf47f9965b3d
+TRELLO_TOKEN=ATTA7b65560fe39edfd3d109f944a2a664b55d4416aa5297e8ee0469b966ad7f60545988FD5E
+

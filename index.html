@@ -1,0 +1,476 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="robots" content="noindex, nofollow">
+<meta name="theme-color" content="#0b0b0f">
+<title>Merci pour votre visite — Page avis</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --accent:#f59e0b; --accent-2:#b45309; --accent-text:#1a1205;
+  --ink:#f5f2ec; --ink-soft:rgba(245,242,236,.72); --ink-faint:rgba(245,242,236,.45);
+  --card:rgba(12,12,14,.55); --card-border:rgba(255,255,255,.10);
+  --radius:24px; --anim:.55s cubic-bezier(.22,.9,.3,1);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{height:100%}
+body{
+  font-family:'Plus Jakarta Sans','Segoe UI',system-ui,-apple-system,sans-serif;
+  color:var(--ink);background:#0b0b0f;display:flex;flex-direction:column;
+  align-items:center;justify-content:center;min-height:100dvh;
+  padding:24px 16px calc(24px + env(safe-area-inset-bottom));
+  overflow-x:hidden;-webkit-tap-highlight-color:transparent;
+}
+#bg{position:fixed;inset:0;z-index:-3;
+  background:
+    radial-gradient(120% 90% at 50% 0%,var(--accent-soft,rgba(245,158,11,.28)) 0%,transparent 55%),
+    radial-gradient(110% 80% at 85% 100%,var(--accent-deep,rgba(180,83,9,.35)) 0%,transparent 60%),
+    linear-gradient(160deg,#101014 0%,#0a0a0e 100%);
+  transition:background 1.2s ease;
+}
+#bg-photo{position:fixed;inset:-12%;z-index:-2;background-size:cover;background-position:center;
+  filter:blur(46px) saturate(1.25) brightness(.55);opacity:0;transition:opacity 1s ease}
+#bg-photo.on{opacity:.9}
+#skeleton{width:100%;max-width:480px;display:flex;flex-direction:column;align-items:center;gap:18px}
+.sk-logo{width:88px;height:88px;border-radius:50%;background:rgba(255,255,255,.12);animation:sk-pulse 1.6s ease-in-out infinite}
+.sk-title{width:72%;height:36px;border-radius:12px;background:rgba(255,255,255,.10);animation:sk-pulse 1.6s ease-in-out .1s infinite}
+.sk-sub{width:55%;height:20px;border-radius:8px;background:rgba(255,255,255,.07);animation:sk-pulse 1.6s ease-in-out .2s infinite}
+.sk-btns{display:flex;flex-direction:column;gap:12px;width:100%;margin-top:10px}
+.sk-btn{height:72px;border-radius:var(--radius);background:rgba(255,255,255,.08);animation:sk-pulse 1.6s ease-in-out .3s infinite}
+@keyframes sk-pulse{0%,100%{opacity:.45}50%{opacity:.9}}
+.hidden{opacity:0;pointer-events:none}
+.fade-in{animation:fadeInUp .65s cubic-bezier(.22,.9,.3,1) forwards}
+@keyframes fadeInUp{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
+#logo-wrap{width:90px;height:90px;border-radius:50%;overflow:hidden;margin-bottom:20px;
+  box-shadow:0 0 0 3px var(--accent),0 0 40px var(--accent-deep,rgba(245,158,11,.35));
+  animation:fadeInUp var(--anim) .05s both;display:flex;align-items:center;justify-content:center;
+  background:rgba(255,255,255,.08);font-weight:800;font-size:1.6rem;color:var(--accent)}
+#logo{width:100%;height:100%;object-fit:cover;display:block}
+.greeting{font-size:.8rem;font-weight:600;letter-spacing:.12em;text-transform:uppercase;
+  color:var(--accent);margin-bottom:6px;animation:fadeInUp var(--anim) .15s both}
+h1{font-size:clamp(1.65rem,5vw,2.2rem);font-weight:800;letter-spacing:-.02em;text-align:center;
+  line-height:1.15;background:linear-gradient(160deg,#fff 20%,rgba(255,255,255,.7));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+  margin-bottom:4px;animation:fadeInUp var(--anim) .22s both}
+#etab-ville{font-size:.85rem;color:var(--ink-faint);text-align:center;margin-bottom:22px;
+  animation:fadeInUp var(--anim) .26s both}
+#etab-ville:empty{display:none;margin-bottom:0}
+.stats{display:flex;gap:10px;flex-wrap:wrap;justify-content:center;margin-bottom:28px;width:100%;
+  max-width:460px;animation:fadeInUp var(--anim) .3s both}
+.stats:empty{display:none;margin-bottom:0}
+.stat-card{flex:1;min-width:110px;max-width:180px;background:var(--card);backdrop-filter:blur(16px);
+  border:1px solid var(--card-border);border-radius:16px;padding:12px 10px;text-align:center;
+  transition:transform .2s ease,box-shadow .2s ease}
+.stat-card:hover{transform:translateY(-2px);box-shadow:0 8px 24px rgba(0,0,0,.35)}
+.stat-value{font-size:1.75rem;font-weight:800;line-height:1;color:var(--accent);display:block;margin-bottom:4px}
+.stat-label{font-size:.68rem;font-weight:500;color:var(--ink-soft);text-transform:uppercase;letter-spacing:.07em}
+.stat-star{color:var(--accent);margin-right:3px}
+.buttons{display:flex;flex-direction:column;gap:11px;width:100%;max-width:460px;animation:fadeInUp var(--anim) .38s both}
+.platform-btn{display:flex;align-items:center;gap:14px;padding:15px 18px;border-radius:var(--radius);
+  background:var(--card);backdrop-filter:blur(16px);border:1px solid var(--card-border);
+  cursor:pointer;text-decoration:none;color:var(--ink);position:relative;overflow:hidden;
+  transition:transform .18s ease,box-shadow .18s ease,border-color .18s ease}
+.platform-btn::before{content:"";position:absolute;left:0;top:0;bottom:0;width:4px;
+  border-radius:4px 0 0 4px;background:var(--btn-color,var(--accent));transition:width .2s ease}
+.platform-btn:hover,.platform-btn:active{transform:translateX(4px);border-color:rgba(255,255,255,.22);box-shadow:0 6px 28px rgba(0,0,0,.45)}
+.platform-btn:hover::before{width:6px}
+.btn-icon{width:40px;height:40px;border-radius:12px;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:1.25rem;background:rgba(255,255,255,.1)}
+.btn-info{flex:1;min-width:0}
+.btn-name{font-size:.95rem;font-weight:700;display:block}
+.btn-action{font-size:.75rem;color:var(--ink-soft);margin-top:2px;display:block}
+.btn-arrow{font-size:1.1rem;color:var(--ink-faint);flex-shrink:0}
+.footnote{font-size:.68rem;color:var(--ink-faint);text-align:center;margin-top:22px;animation:fadeInUp var(--anim) .46s both}
+#confetti-canvas{position:fixed;inset:0;width:100%;height:100%;pointer-events:none;z-index:100;opacity:0;transition:opacity .3s}
+#confetti-canvas.on{opacity:1}
+.success-overlay{position:fixed;inset:0;z-index:200;background:rgba(0,0,0,.72);backdrop-filter:blur(10px);
+  display:flex;align-items:center;justify-content:center;padding:24px;opacity:0;pointer-events:none;transition:opacity .4s ease}
+.success-overlay.on{opacity:1;pointer-events:auto}
+.success-card{background:rgba(14,14,18,.96);border:1px solid rgba(255,255,255,.12);border-radius:28px;
+  padding:40px 32px;text-align:center;max-width:360px;width:100%;box-shadow:0 32px 80px rgba(0,0,0,.6);
+  transform:scale(.88);transition:transform .45s cubic-bezier(.22,.9,.3,1.2)}
+.success-overlay.on .success-card{transform:scale(1)}
+.success-check{width:72px;height:72px;border-radius:50%;background:var(--accent);color:var(--accent-text);
+  font-size:2.4rem;font-weight:900;line-height:72px;margin:0 auto 20px;
+  box-shadow:0 0 0 12px var(--accent-ring,rgba(245,158,11,.2)),0 0 48px var(--accent-deep,rgba(245,158,11,.4));
+  animation:checkPop .55s cubic-bezier(.22,.9,.3,1.4) .15s both}
+@keyframes checkPop{from{transform:scale(0);opacity:0}to{transform:scale(1);opacity:1}}
+.success-title{font-size:1.3rem;font-weight:800;color:#fff;margin-bottom:8px}
+.success-sub{font-size:.85rem;color:var(--ink-soft);margin-bottom:24px;line-height:1.5}
+.success-close{background:var(--accent);color:var(--accent-text);border:none;border-radius:14px;
+  padding:12px 32px;font-size:.9rem;font-weight:700;cursor:pointer;font-family:inherit;transition:transform .15s}
+.success-close:hover{transform:scale(1.04)}
+@media(max-width:420px){
+  h1{font-size:1.45rem}
+  .stat-card{min-width:92px}
+  .stat-value{font-size:1.4rem}
+  .platform-btn{padding:13px 14px}
+  .btn-icon{width:36px;height:36px}
+}
+@media(prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation-duration:.01ms !important;transition-duration:.01ms !important}
+}
+</style>
+</head>
+<body>
+<div id="bg"></div>
+<div id="bg-photo"></div>
+
+<div id="skeleton" aria-hidden="true">
+  <div class="sk-logo"></div>
+  <div class="sk-title"></div>
+  <div class="sk-sub"></div>
+  <div class="sk-btns"><div class="sk-btn"></div><div class="sk-btn"></div><div class="sk-btn"></div></div>
+</div>
+
+<main id="main" class="hidden">
+  <div id="logo-wrap"><img id="logo" src="" alt="Logo" style="display:none"></div>
+  <p id="greeting" class="greeting"></p>
+  <h1 id="etab-name"></h1>
+  <p id="etab-ville"></p>
+  <div id="stats" class="stats"></div>
+  <div id="buttons" class="buttons"></div>
+  <p class="footnote">Aucune pub, aucune donnée collectée — juste un geste simple.</p>
+</main>
+
+<canvas id="confetti-canvas" aria-hidden="true"></canvas>
+
+<div id="success-overlay" class="success-overlay" role="dialog" aria-modal="true" aria-label="Merci !">
+  <div class="success-card">
+    <div class="success-check">&#10003;</div>
+    <p class="success-title">Merci pour votre geste&nbsp;!</p>
+    <p class="success-sub" id="success-msg"></p>
+    <button class="success-close" id="success-close">Fermer</button>
+  </div>
+</div>
+
+<script>
+'use strict';
+
+/* ============================================================================
+   CONFIG DE DÉMO — utilisée uniquement si aucun ?id=... n'est fourni dans
+   l'URL, ou si l'appel à /api/business échoue (test local, aperçu offline).
+   En production, ces valeurs sont écrasées par la réponse de business.js.
+   ============================================================================ */
+const CONFIG = {
+  etab:  { nom:'Chez Marco', ville:'', logo:'', photo:'' },
+  stats: { note:4.6, avis:128 },
+  liens: {
+    google:'https://g.page/r/DEMO/review',
+    tripadvisor:'https://www.tripadvisor.fr/UserReviewEdit-gDEMO',
+    facebook:'',
+    instagram:'https://www.instagram.com/chezmarco',
+    website:'',
+    maps:'https://maps.google.com/?q=Chez+Marco',
+  },
+  merci:'Votre avis aide vraiment {nom} à continuer à bien vous recevoir.',
+  couleurs:[],
+};
+
+/* Ordre d'affichage fixe des plateformes (seules celles avec un lien non vide s'affichent) */
+const PLATEFORMES_DEF = [
+  { id:'google',      nom:'Google',      action:'Laisser un avis' },
+  { id:'tripadvisor', nom:'TripAdvisor', action:'Laisser un avis' },
+  { id:'facebook',    nom:'Facebook',    action:'Nous suivre' },
+  { id:'instagram',   nom:'Instagram',   action:'Nous suivre' },
+  { id:'website',     nom:'Site web',    action:'Visiter le site' },
+  { id:'maps',        nom:'Google Maps', action:'Voir sur la carte' },
+];
+
+const ICONES = {
+  google:      '<svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 8v8M8 12h8"/></svg>',
+  tripadvisor: '<svg viewBox="0 0 24 24" width="22" height="22" fill="currentColor"><path d="M12 3C6.5 3 2 7.5 2 13s4.5 10 10 10 10-4.5 10-10S17.5 3 12 3zm-5 13.5A4 4 0 117 8.5a4 4 0 010 8zm0-2.5A1.5 1.5 0 107 15.5 1.5 1.5 0 007 14zm10 2.5a4 4 0 110-8 4 4 0 010 8zm0-2.5a1.5 1.5 0 100 3 1.5 1.5 0 000-3z"/></svg>',
+  facebook:    '<svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 4h-2a4 4 0 00-4 4v3H7v4h2v7h4v-7h3l1-4h-4V8a1 1 0 011-1h3z"/></svg>',
+  instagram:   '<svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2"><rect x="2.5" y="2.5" width="19" height="19" rx="5.5"/><circle cx="12" cy="12" r="4.5"/><circle cx="17.6" cy="6.4" r="1.3" fill="currentColor" stroke="none"/></svg>',
+  website:     '<svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a14 14 0 010 18 14 14 0 010-18z"/></svg>',
+  maps:        '<svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>',
+};
+
+const $ = (s) => document.querySelector(s);
+
+/* ============================================================================
+   CHARGEMENT DES DONNÉES — via /api/business?id=... (Cloudflare Function qui
+   lit Trello), avec repli sur les paramètres d'URL puis sur le CONFIG de démo.
+   ============================================================================ */
+async function chargerDonnees() {
+  const p = new URLSearchParams(location.search);
+  const id = p.get('id');
+
+  if (id) {
+    try {
+      const res = await fetch(`/api/business?id=${encodeURIComponent(id)}`);
+      if (res.ok) {
+        const d = await res.json();
+        if (!d.error) {
+          CONFIG.etab.nom   = d.nom   || CONFIG.etab.nom;
+          CONFIG.etab.ville = d.ville || '';
+          CONFIG.etab.logo  = d.logo  || '';
+          CONFIG.stats.note = d.note;
+          CONFIG.stats.avis = d.avis;
+          CONFIG.liens = {
+            google: d.google || '', tripadvisor: d.tripadvisor || '',
+            facebook: d.facebook || '', instagram: d.instagram || '',
+            website: d.website || '', maps: d.maps || '',
+          };
+        } else {
+          console.warn('[Repzy] business.js a renvoyé une erreur :', d.error, '→ affichage de la démo');
+        }
+      } else {
+        console.warn('[Repzy] /api/business indisponible (HTTP', res.status, ') → affichage de la démo');
+      }
+    } catch (e) {
+      console.warn('[Repzy] Impossible de contacter /api/business → affichage de la démo', e);
+    }
+  }
+
+  // Surcharges manuelles via l'URL, utiles pour tester sans backend :
+  // ?nom=...&ville=...&logo=...&photo=...&couleur=r,g,b,r,g,b&g=...&t=...&f=...&i=...&w=...&m=...
+  if (p.get('nom'))     CONFIG.etab.nom   = p.get('nom');
+  if (p.get('ville'))   CONFIG.etab.ville = p.get('ville');
+  if (p.get('logo'))    CONFIG.etab.logo  = p.get('logo');
+  if (p.get('photo'))   CONFIG.etab.photo = p.get('photo');
+  if (p.get('note'))    CONFIG.stats.note = parseFloat(p.get('note'));
+  if (p.get('avis'))    CONFIG.stats.avis = parseInt(p.get('avis'), 10);
+  if (p.get('couleur')) CONFIG.couleurs   = p.get('couleur').split(',').map(h => h.trim()).filter(Boolean);
+  if (p.get('g')) CONFIG.liens.google      = p.get('g');
+  if (p.get('t')) CONFIG.liens.tripadvisor = p.get('t');
+  if (p.get('f')) CONFIG.liens.facebook    = p.get('f');
+  if (p.get('i')) CONFIG.liens.instagram   = p.get('i');
+  if (p.get('w')) CONFIG.liens.website     = p.get('w');
+  if (p.get('m')) CONFIG.liens.maps        = p.get('m');
+}
+
+/** Salutation selon l'heure locale */
+function salutation() {
+  const h = new Date().getHours();
+  if (h >= 5  && h < 12) return 'aujourd\u2019hui \u2600\uFE0F';
+  if (h >= 12 && h < 18) return 'aujourd\u2019hui';
+  return 'ce soir \uD83C\uDF19';
+}
+
+/** Extrait la couleur dominante d'une image via canvas (échantillonnage 32×32) */
+function extrairePalette(src) {
+  if (!src) return Promise.resolve(null);
+  return new Promise((resolve) => {
+    const img = new Image();
+    img.crossOrigin = 'anonymous';
+    img.onload = () => {
+      try {
+        const c = document.createElement('canvas');
+        const x = c.getContext('2d', { willReadFrequently: true });
+        c.width = 32; c.height = 32;
+        x.drawImage(img, 0, 0, 32, 32);
+        const d = x.getImageData(0, 0, 32, 32).data;
+        const histo = {};
+        for (let i = 0; i < d.length; i += 4) {
+          const r = d[i], g = d[i+1], b = d[i+2], a = d[i+3];
+          if (a < 128) continue;
+          const lum = 0.299*r + 0.587*g + 0.114*b;
+          if (lum < 30 || lum > 228) continue;
+          const key = [r,g,b].map(v => Math.round(v/32)*32).join(',');
+          histo[key] = (histo[key] || 0) + 1;
+        }
+        const top = Object.entries(histo).sort((a,b) => b[1]-a[1])[0];
+        if (!top) { resolve(null); return; }
+        const main = top[0].split(',').map(Number);
+        const dark = main.map(v => Math.max(0, v - 55));
+        const soft = main.map(v => Math.min(255, Math.round(v*0.65 + 90)));
+        resolve({ main:`rgb(${main})`, dark:`rgb(${dark})`, soft:`rgba(${soft.join(',')},0.28)` });
+      } catch(e) { resolve(null); }
+    };
+    img.onerror = () => resolve(null);
+    img.src = src;
+  });
+}
+
+function appliquerPalette(pal) {
+  if (!pal) return;
+  const r = document.documentElement.style;
+  r.setProperty('--accent',      pal.main);
+  r.setProperty('--accent-2',    pal.dark);
+  r.setProperty('--accent-deep', pal.dark.replace('rgb','rgba').replace(')', ',0.5)'));
+  r.setProperty('--accent-soft', pal.soft);
+  r.setProperty('--accent-ring', pal.main.replace('rgb','rgba').replace(')', ',0.2)'));
+}
+
+/* ============================================================================
+   RENDU
+   ============================================================================ */
+function rendreStats() {
+  const { note, avis } = CONFIG.stats;
+  const cartes = [];
+  if (note != null && !Number.isNaN(note)) {
+    cartes.push(`<div class="stat-card"><span class="stat-value"><span class="stat-star">\u2605</span>${note}</span><span class="stat-label">Note moyenne</span></div>`);
+  }
+  if (avis != null && !Number.isNaN(avis)) {
+    cartes.push(`<div class="stat-card"><span class="stat-value">${avis}</span><span class="stat-label">Avis re\u00E7us</span></div>`);
+  }
+  $('#stats').innerHTML = cartes.join('');
+}
+
+function rendreBoutons() {
+  const actives = PLATEFORMES_DEF.filter(p => CONFIG.liens[p.id]);
+  $('#buttons').innerHTML = actives.map(p => `
+    <a class="platform-btn" href="${CONFIG.liens[p.id]}" target="_blank" rel="noopener noreferrer"
+       data-platform="${p.id}" onclick="lancerPlateforme(event,'${p.id}')">
+      <div class="btn-icon">${ICONES[p.id] || ''}</div>
+      <div class="btn-info">
+        <span class="btn-name">${p.nom}</span>
+        <span class="btn-action">${p.action}</span>
+      </div>
+      <span class="btn-arrow">\u2192</span>
+    </a>`).join('');
+}
+
+function rendre() {
+  if (CONFIG.etab.logo) {
+    const img = $('#logo');
+    img.src = CONFIG.etab.logo;
+    img.style.display = 'block';
+    img.onerror = () => { img.style.display = 'none'; montrerInitiales(); };
+  } else {
+    montrerInitiales();
+  }
+  if (CONFIG.etab.photo) {
+    $('#bg-photo').style.backgroundImage = `url(${CONFIG.etab.photo})`;
+    $('#bg-photo').classList.add('on');
+  }
+  $('#greeting').textContent = `Merci pour votre visite ${salutation()}`;
+  $('#etab-name').textContent = CONFIG.etab.nom;
+  $('#etab-ville').textContent = CONFIG.etab.ville || '';
+  document.title = `${CONFIG.etab.nom} — Merci !`;
+  rendreStats();
+  rendreBoutons();
+}
+
+function montrerInitiales() {
+  const initials = (CONFIG.etab.nom || '?').split(/\s+/).map(w => w[0]).slice(0, 2).join('').toUpperCase();
+  const wrap = $('#logo-wrap');
+  if (!$('#logo-init')) {
+    const span = document.createElement('span');
+    span.id = 'logo-init';
+    wrap.appendChild(span);
+  }
+  $('#logo-init').textContent = initials;
+}
+
+/* ============================================================================
+   DEEP-LINK APP vs WEB — pour Instagram/Google Maps
+   ============================================================================ */
+const DEEP_LINKS = {
+  instagram: { custom:(handle)=>`instagram://user?username=${handle}`,
+               store:(ios)=> ios ? 'itms-apps://itunes.apple.com/app/389801252'
+                                 : 'https://play.google.com/store/apps/details?id=com.instagram.android' },
+  maps:      { custom:(q)=>`comgooglemaps://?q=${encodeURIComponent(q)}`,
+               store:(ios)=> ios ? 'itms-apps://itunes.apple.com/app/id585027354'
+                                 : 'https://play.google.com/store/apps/details?id=com.google.android.apps.maps' },
+};
+
+function isIOS() { return /iPad|iPhone|iPod/.test(navigator.userAgent); }
+
+function openWithFallback(scheme, webUrl) {
+  const timer = setTimeout(() => { if (!document.hidden) window.location.href = webUrl; }, 1400);
+  window.addEventListener('blur', function onBlur() { clearTimeout(timer); window.removeEventListener('blur', onBlur); }, { once:true });
+  try { window.location.href = scheme; } catch(e) { clearTimeout(timer); window.location.href = webUrl; }
+}
+
+function lancerPlateforme(ev, id) {
+  ev.preventDefault();
+  const web = CONFIG.liens[id];
+
+  if (id === 'instagram') {
+    const handle = (web.match(/instagram\.com\/([^\/?#]+)/) || [])[1] || 'reviews';
+    openWithFallback(DEEP_LINKS.instagram.custom(handle), web);
+    marquerRetour();
+    return;
+  }
+  if (id === 'maps') {
+    openWithFallback(DEEP_LINKS.maps.custom(CONFIG.etab.nom), web);
+    return; // pas de "merci" sur une simple consultation de carte
+  }
+  window.open(web, '_blank', 'noopener');
+  marquerRetour();
+}
+
+/* ============================================================================
+   MICRO-INTERACTION RETOUR — confettis + check quand le client revient
+   ============================================================================ */
+const CLE_VISITE = 'repzy_dernier_clic';
+function marquerRetour() { try { localStorage.setItem(CLE_VISITE, String(Date.now())); } catch(e) {} }
+function aCliqueRecemment() {
+  try { const t = Number(localStorage.getItem(CLE_VISITE) || 0); return t && (Date.now() - t) < 10*60*1000; }
+  catch(e) { return false; }
+}
+function consommerClic() { try { localStorage.removeItem(CLE_VISITE); } catch(e) {} }
+
+function confettis() {
+  const cv = $('#confetti-canvas');
+  const ctx = cv.getContext('2d');
+  cv.width = innerWidth; cv.height = innerHeight;
+  cv.classList.add('on');
+  const accent = getComputedStyle(document.documentElement).getPropertyValue('--accent').trim() || '#f59e0b';
+  const couleurs = [accent, '#ffffff', '#ffd166', '#ef476f', '#06d6a0'];
+  const parts = Array.from({ length: 42 }, () => ({
+    x: Math.random() * cv.width, y: -20 - Math.random() * cv.height * 0.3,
+    r: 3 + Math.random() * 5, dx: (Math.random() - .5) * 2.4, dy: 2 + Math.random() * 3.4,
+    rot: Math.random() * Math.PI, vr: (Math.random() - .5) * .25,
+    c: couleurs[Math.floor(Math.random() * couleurs.length)],
+  }));
+  const t0 = performance.now();
+  (function frame(t) {
+    ctx.clearRect(0, 0, cv.width, cv.height);
+    let vivant = false;
+    for (const p of parts) {
+      p.x += p.dx; p.y += p.dy; p.rot += p.vr;
+      if (p.y < cv.height + 20) vivant = true;
+      ctx.save(); ctx.translate(p.x, p.y); ctx.rotate(p.rot);
+      ctx.fillStyle = p.c; ctx.fillRect(-p.r, -p.r/2, p.r*2, p.r); ctx.restore();
+    }
+    if (vivant && t - t0 < 2400) requestAnimationFrame(frame);
+    else { cv.classList.remove('on'); ctx.clearRect(0, 0, cv.width, cv.height); }
+  })(t0);
+}
+
+function montrerSucces() {
+  $('#success-msg').textContent = CONFIG.merci.replace('{nom}', CONFIG.etab.nom);
+  $('#success-overlay').classList.add('on');
+}
+$('#success-close').addEventListener('click', () => $('#success-overlay').classList.remove('on'));
+$('#success-overlay').addEventListener('click', (e) => { if (e.target === e.currentTarget) $('#success-overlay').classList.remove('on'); });
+
+document.addEventListener('visibilitychange', () => {
+  if (document.visibilityState === 'visible' && aCliqueRecemment()) {
+    consommerClic();
+    confettis();
+    setTimeout(montrerSucces, 700);
+  }
+});
+
+/* ============================================================================
+   BOOT
+   ============================================================================ */
+(async function init() {
+  await chargerDonnees();
+
+  let pal = null;
+  if (CONFIG.couleurs.length >= 2) {
+    pal = { main:`rgb(${CONFIG.couleurs[0]})`, dark:`rgb(${CONFIG.couleurs[1]})`, soft:`rgba(${CONFIG.couleurs[1]},0.28)` };
+  } else {
+    pal = await extrairePalette(CONFIG.etab.logo || CONFIG.etab.photo);
+  }
+
+  rendre();
+  if (pal) appliquerPalette(pal);
+
+  await new Promise(r => setTimeout(r, 380));
+  $('#skeleton').style.display = 'none';
+  const main = $('#main');
+  main.classList.remove('hidden');
+  main.classList.add('fade-in');
+})();
+</script>
+</body>
+</html>
